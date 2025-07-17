@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santosh Kumar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --background-color: #f4e3e3d4;
+            --text-color: #2c3e50;
+            --accent-color: #1175d8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #dfe8e78e, #ff7066db);
+  color: #333;
+  line-height: 1.6;
+  padding: 20px;
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.3);
+  /* No blur */
+  border-radius: 20px;
+  padding: 20px;
+    background: rgba(255, 255, 255, 0.15); /* transparent background */
+  backdrop-filter: blur(15px);           /* ✂️ REMOVE THIS */
+  -webkit-backdrop-filter: blur(15px);   /* ✂️ REMOVE THIS */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+}
+
+
+
+.profile,
+.dashboard-container,
+.section,
+.skills-section,
+.download-button {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;      /* Horizontally center all child elements */
+  justify-content: center;  /* Vertically center if needed */
+  text-align: center;       /* Center text inside elements */
+  padding: 20px;
+}
+
+.profile-image {
+  width: 120px;
+  height: 120px;
+  align-items: center;
+  object-fit:cover;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  margin-bottom: 10px;
+}
+
+.dashboard-iframe {
+  width: 100%;
+  height: 85vh;
+  border: none;
+  border-radius: 12px;
+}
+
+.section-header {
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.section-content {
+  display: none;
+  padding-top: 10px;
+}
+
+.section-content.active {
+  display: block;
+}
+
+.skill-item {
+  display: inline-block;
+  padding: 8px 16px;
+  margin: 6px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  font-weight: 500;
+}
+
+.download-button {
+  display: inline-block;
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.25);
+  color: #000;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 14px;
+  transition: 0.3s;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.download-button:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+
+
+
+        /* Responsive Adjustments */
+     @media (max-width: 1024px) {
+  .container {
+    padding: 20px;
+  }
+
+  .profile-name {
+    font-size: 2rem;
+  }
+
+  .profile-image {
+    width: 120px;
+    height: 120px;
+  }
+
+  .dashboard-iframe {
+    height: 65vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  .profile-name {
+    font-size: 1.6rem;
+  }
+
+  .profile-title {
+    font-size: 1rem;
+  }
+
+  .dashboard-iframe {
+    height: 60vh;
+    width: 100%;
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .section-toggle {
+    align-self: flex-end;
+  }
+
+  .download-button {
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 10px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-name {
+    font-size: 1.4rem;
+  }
+
+  .profile-title {
+    font-size: 0.9rem;
+  }
+
+  .dashboard-iframe {
+    height: 55vh;
+  }
+
+  .skill-card {
+    padding: 1rem;
+  }
+
+  .skill-card h3 {
+    font-size: 1rem;
+  }
+
+  .skill-card p {
+    font-size: 0.8rem;
+  }
+
+  .social-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .social-links a {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+}
+
+
+
+        /* Skills Section */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  justify-items: center;
+}
+
+.skill-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(154, 154, 154, 0.1);
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 250px;
+}
+
+.skill-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(137, 137, 137, 0.2);
+}
+
+.skill-card .icon {
+  font-size: 2.5rem;
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+}
+
+.skill-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.skill-card p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+
+    .social-links {
+      display: flex;
+      gap: 20px;
+    }
+    .social-links a {
+      text-decoration: none;
+      color: #fff;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .social-links a:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .instagram { background-color: #E1306C; }
+    .linkedin { background-color: #0077B5; }
+    .github { background-color: #333; }
+    .gmail { background-color: #D14836; }
+    .social-links i {
+      font-size: 24px;
+    }
+
+    .social-section
+    {
+        display: flex;
+        justify-content: center;
+ 
+    }
+
+</style>
+</head>
+<body>
+    <div class="container">
+        <!-- Profile Section -->
+        <div class="profile">
+            <img src="pictures/SG web.jpeg" alt="Profile Picture" class="profile-image">
+            <h1 class="profile-name">Santosh Kumar</h1>
+            <p class="profile-title">Zomato Power BI Dashboard</p>
+            
+    
+        </div>
+
+       
+
+        <!-- Dashboard Section -->
+        <!-- Paste Publish Report URL here -->
+        <div class="dashboard-container">
+            <iframe
+                class="dashboard-iframe" 
+                src="https://app.powerbi.com/view?r=eyJrIjoiNmYzYmNjNDYtNGI2OC00NTMyLTg4M2QtZmZmZTU5MDRhNTMxIiwidCI6ImRkM2E5NTVkLWFiNzMtNGU4OC1hNDdhLTQ1ZGUyNWE5MjViZCJ9&pageName=a85c741bf1cc544e1dcc" 
+                frameborder="0" 
+                title="ZomatoDashbord" 
+                allowfullscreen ="true">
+            </iframe>
+
+        </div>
+
+      
+
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">Sales Overview</h2>
+                <div class="section-toggle">+</div>
+            </div>
+            <div class="section-content">
+                <p>The Sales Overview report offers a comprehensive breakdown of sales performance across various regions, time periods, and product categories. It identifies trends, peak sales periods, and revenue contributions from key areas. This report helps businesses understand sales drivers and plan strategies to boost overall revenue.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">Overview Report</h2>
+                <div class="section-toggle">+</div>
+            </div>
+            <div class="section-content">
+                <p>The Overview report provides a high-level snapshot of the business performance across key metrics. It highlights total revenue, orders, operational efficiency, and customer engagement. This report serves as a quick summary for stakeholders to assess overall business health and growth trends.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">Customer Report</h2>
+                <div class="section-toggle">+</div>
+            </div>
+            <div class="section-content">
+                <ul>
+                    <p> The Customer report focuses on customer behavior and order patterns. It includes insights such as top-ordering customers, repeat purchase rates, and demographic details. This report helps businesses identify loyal customers, understand preferences, and enhance satisfaction by addressing customer needs effectively.</p>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">Inventory Report</h2>
+                <div class="section-toggle">+</div>
+            </div>
+            <div class="section-content">
+                <p>Track operational KPIs such as delivery time, efficiency rates, and partner performance to improve overall workflow.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title"> Marketing Report</h2>
+                <div class="section-toggle">+</div>
+            </div>
+            <div class="section-content">
+                <p>The Marketing report analyzes the impact of campaigns and promotions on sales and customer acquisition. It tracks key metrics like conversion rates, ad performance, and revenue generated from marketing efforts. By identifying successful campaigns, businesses can optimize marketing strategies for better ROI.</p>
+            </div>
+        </div>
+
+           <!-- Download Project Button -->
+           <a href="" download="Zomato Power BI Dashboard.pdf" class="download-button">Download Project PDF</a>
+ 
+
+          <!-- Expandable Sections -->
+
+          <!-- Technical Skills Section -->
+<section id="skills" style="padding: 2rem 0;">
+    <div class="container">
+      <h2 class="section-title" style="text-align: center; margin-bottom: 2rem;">Skill Used</h2>
+      <div class="skills-grid">
+        <!-- Skill Card 1 -->
+        <div class="skill-card">
+          <div class="icon">
+            <i class="fas fa-database"></i>
+          </div>
+          <h3>SQL</h3>
+          <p>Data querying and database management</p>
+        </div>
+        <!-- Skill Card 2 -->
+        <div class="skill-card">
+          <div class="icon">
+            <i class="fas fa-chart-bar"></i>
+          </div>
+          <h3>Power BI</h3>
+          <p>Data visualization and dashboards</p>
+        </div>
+        <!-- Skill Card 3 -->
+        <div class="skill-card">
+          <div class="icon">
+            <i class="fab fa-figma"></i>
+          </div>
+          <h3>Figma</h3>
+          <p>Design Theme and elements</p>
+        </div>
+        <!-- Skill Card 4 -->
+        <!-- <div class="skill-card">
+          <div class="icon">
+            <i class="fab fa-html5"></i>
+          </div>
+          <h3>HTML & CSS</h3>
+          <p>Web design and front-end development</p>
+        </div>  -->
+      </div>
+    </div>
+  </section>
+
+  <div class="social-section">
+
+  
+
+    <div class="social-links">
+
+                
+        <a href="" class="instagram" target="_blank" title="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/santosh-kumar-787234341/" class="linkedin" target="_blank" title="LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="https://github.com/SantoshGorebal007" class="github" target="_blank" title="GitHub">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="mailto:your-email@gmail.com" class="gmail" title="Gmail">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </div>
+    
+
+  </div>
+ 
+
+        </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.section');
+
+            sections.forEach(section => {
+                const header = section.querySelector('.section-header');
+                const content = section.querySelector('.section-content');
+                const toggle = section.querySelector('.section-toggle');
+
+                header.addEventListener('click', () => {
+                    // Close other sections
+                    sections.forEach(otherSection => {
+                        if (otherSection !== section) {
+                            otherSection.querySelector('.section-content').classList.remove('active');
+                            otherSection.querySelector('.section-toggle').textContent = '+';
+                        }
+                    });
+
+                    // Toggle current section
+                    content.classList.toggle('active');
+                    toggle.textContent = content.classList.contains('active') ? '−' : '+';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
