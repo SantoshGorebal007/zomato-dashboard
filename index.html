@@ -3,18 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Santosh Kumar</title>
+    <title>Zomato Business Intelligence </title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <style>
         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #34495e;
-            --background-color: #f4e3e3d4;
-            --text-color: #2c3e50;
-            --accent-color: #1175d8;
+  --primary-color: #2c3e50;
+  --secondary-color: #34495e;
+  --background-color: #f4e3e3d4;
+  --text-color: #2c3e50;
+  --accent-color: #1175d8;
+  --d: 6000ms;
+  --angle: 90deg;
+  --gradX: 100%;
+  --gradY: 50%;
+  --c1: rgba(168, 239, 255, 1);
+  --c2: rgba(168, 239, 255, 0.1);
+}
+
+        @property --angle {
+          syntax: '<angle>';
+          initial-value: 90deg;
+          inherits: true;
         }
+        @property --gradX {
+          syntax: '<percentage>';
+          initial-value: 50%;
+          inherits: true;
+        }
+        @property --gradY {
+          syntax: '<percentage>';
+          initial-value: 0%;
+          inherits: true;
+        }
+        /* Remove animated border effect from main sections and download button */
+.section,
+.download-button {
+  border: 0.35rem solid;
+  border-image: conic-gradient(from var(--angle), var(--c2), var(--c1) 0.1turn, var(--c1) 0.15turn, var(--c2) 0.25turn) 30;
+  animation: borderRotate var(--d) cubic-bezier(0.4,0,0.2,1) infinite forwards;
+}
+
 
         * {
             margin: 0;
@@ -31,41 +61,97 @@ body {
 }
 
 .container {
-  background: rgba(255, 255, 255, 0.3);
-  /* No blur */
+  background: rgba(255, 255, 255, 0.15); /* transparent background */
   border-radius: 20px;
   padding: 20px;
-    background: rgba(255, 255, 255, 0.15); /* transparent background */
-  backdrop-filter: blur(15px);           /* ✂️ REMOVE THIS */
-  -webkit-backdrop-filter: blur(15px);   /* ✂️ REMOVE THIS */
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-
 }
 
 
 
 .profile,
-.dashboard-container,
-.section,
-.skills-section,
-.download-button {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+.dashboard-container {
+  background: rgba(255, 255, 255, 0.1); /* More transparent background */
+  backdrop-filter: blur(10px); /* Slightly less blur for inner elements */
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
   padding: 20px;
   margin-bottom: 30px;
 }
 
+
+@keyframes glow {
+  0% {
+    border-color: #1175d8;
+    box-shadow: none;
+  }
+  50% {
+    border-color: #42a5ff;
+    box-shadow: 0 0 12px 4px #42a5ff;
+  }
+  100% {
+    border-color: #1175d8;
+    box-shadow: none;
+  }
+}
+
+
+.section,
+.skills-section,
+.download-button {
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+  padding: 20px;
+  margin-bottom: 30px;
+  transition: box-shadow 0.3s, border-color 0.3s;
+  isolation: isolate;
+}
+/* Remove conic-gradient border animation and related mask from sections and download button */
+.section::before,
+.skills-section::before,
+.download-button::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 2px;
+  background: none;
+  -webkit-mask: none;
+  mask: none;
+  pointer-events: none;
+  animation: none;
+}
+.section:hover::before,
+.skills-section:hover::before,
+.download-button:hover::before {
+  animation-play-state: initial;
+}
+
+@property --angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0turn;
+}
+@keyframes spin {
+  to {
+    --angle: 1turn;
+  }
+}
+
 .profile {
+  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;      /* Horizontally center all child elements */
-  justify-content: center;  /* Vertically center if needed */
-  text-align: center;       /* Center text inside elements */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   padding: 20px;
 }
 
@@ -73,10 +159,12 @@ body {
   width: 120px;
   height: 120px;
   align-items: center;
-  object-fit:cover;
+  object-fit: cover;
   border-radius: 50%;
-  border: 3px solid rgba(255, 255, 255, 0.5);
+  border: 3px solid rgba(255, 255, 255, 0.7);
   margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
 }
 
 .dashboard-iframe {
@@ -240,19 +328,22 @@ body {
 }
 
 .skill-card {
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(154, 154, 154, 0.1);
+  box-shadow: 0 4px 15px rgba(154, 154, 154, 0.2); /* Lighter shadow for shining effect */
   padding: 1.5rem;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   width: 100%;
   max-width: 250px;
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Shining border for skill cards */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
 .skill-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(137, 137, 137, 0.2);
+  box-shadow: 0 8px 20px rgba(137, 137, 137, 0.3);
 }
 
 .skill-card .icon {
@@ -286,15 +377,20 @@ body {
       align-items: center;
       border-radius: 50%;
       transition: transform 0.3s, box-shadow 0.3s;
+      background-color: rgba(255, 255, 255, 0.1); /* Transparent background for social icons */
+      border: 1px solid rgba(255, 255, 255, 0.4); /* Shining border for social icons */
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
     }
     .social-links a:hover {
       transform: scale(1.1);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 25px rgba(255, 255, 255, 0.6); /* Enhanced shining on hover */
     }
-    .instagram { background-color: #E1306C; }
-    .linkedin { background-color: #0077B5; }
-    .github { background-color: #333; }
-    .gmail { background-color: #D14836; }
+    /* Specific colors for social icons for better visibility over transparent background */
+    .instagram { background-color: rgba(225, 48, 108, 0.7); }
+    .linkedin { background-color: rgba(0, 119, 181, 0.7); }
+    .github { background-color: rgba(51, 51, 51, 0.7); }
+    .gmail { background-color: rgba(209, 72, 54, 0.7); }
     .social-links i {
       font-size: 24px;
     }
@@ -306,13 +402,79 @@ body {
  
     }
 
+    /* Horizontal scroll for skill cards */
+.skills-grid.horizontal-scroll {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  overflow-x: hidden;
+  padding-bottom: 10px;
+  align-items: flex-start;
+  position: relative;
+}
+.skills-grid.horizontal-scroll .skill-card {
+  min-width: 200px;
+  max-width: 200px;
+  height: 260px;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.skills-grid.horizontal-scroll .skill-card .icon {
+  flex-shrink: 0;
+}
+.skills-grid.horizontal-scroll .skill-card h3,
+.skills-grid.horizontal-scroll .skill-card p {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+}
+.skills-grid.horizontal-scroll::-webkit-scrollbar {
+  display: none;
+}
+@media (max-width: 1024px) {
+  .skills-grid.horizontal-scroll {
+    gap: 1rem;
+    padding-bottom: 8px;
+  }
+  .skills-grid.horizontal-scroll .skill-card {
+    min-width: 180px;
+    max-width: 180px;
+    height: 220px;
+    padding: 1rem 0.5rem;
+  }
+}
+@media (max-width: 768px) {
+  .skills-grid.horizontal-scroll {
+    gap: 0.7rem;
+    padding-bottom: 6px;
+  }
+  .skills-grid.horizontal-scroll .skill-card {
+    min-width: 150px;
+    max-width: 150px;
+    height: 180px;
+    padding: 0.7rem 0.3rem;
+  }
+  .skills-grid.horizontal-scroll .skill-card h3 {
+    font-size: 1rem;
+  }
+  .skills-grid.horizontal-scroll .skill-card p {
+    font-size: 0.8rem;
+  }
+}
 </style>
 </head>
 <body>
     <div class="container">
-        <!-- Profile Section -->
         <div class="profile">
-            <img src="pictures/SG web.jpeg" alt="Profile Picture" class="profile-image">
+            <!-- Morphing background removed -->
+            <img src="pictures/SG web.jpeg" alt="Profile Picture" class="profile-image" style="position: relative; z-index: 1;">
             <h1 class="profile-name">Santosh Kumar</h1>
             <p class="profile-title">Zomato Power BI Dashboard</p>
             
@@ -321,8 +483,6 @@ body {
 
        
 
-        <!-- Dashboard Section -->
-        <!-- Paste Publish Report URL here -->
         <div class="dashboard-container">
             <iframe
                 class="dashboard-iframe" 
@@ -338,11 +498,11 @@ body {
 
         <div class="section">
             <div class="section-header">
-                <h2 class="section-title">Sales Overview</h2>
+                <h2 class="section-title">Project Overview</h2>
                 <div class="section-toggle">+</div>
             </div>
             <div class="section-content">
-                <p>The Sales Overview report offers a comprehensive breakdown of sales performance across various regions, time periods, and product categories. It identifies trends, peak sales periods, and revenue contributions from key areas. This report helps businesses understand sales drivers and plan strategies to boost overall revenue.</p>
+                <p>This Zomato data analysis project leverages AWS/Azure ETL/ETP pipelines to provide actionable insights across sales, operations, and customer behavior, presented through Power BI dashboards covering overall performance, KPIs, user trends, and city-specific metrics.</p>
             </div>
         </div>
 
@@ -352,54 +512,56 @@ body {
                 <div class="section-toggle">+</div>
             </div>
             <div class="section-content">
-                <p>The Overview report provides a high-level snapshot of the business performance across key metrics. It highlights total revenue, orders, operational efficiency, and customer engagement. This report serves as a quick summary for stakeholders to assess overall business health and growth trends.</p>
+                <p>The Overview Page serves as the high-level executive summary of Zomato's overall business performance. It provides a quick snapshot of key business health indicators, allowing stakeholders to grasp the current state and identify immediate trends. Key Metrics include Total Revenue, Total Orders, Average Order Value, Number of Active Customers, and overall Operational Efficiency Score. Visualizations typically include high-level trend lines for revenue and orders over time, geographical heatmaps for overall performance, and summary cards for current key figures. Its purpose is to offer a concise, top-down view of the business, enabling rapid assessment of performance and strategic alignmen</p>
             </div>
         </div>
 
         <div class="section">
             <div class="section-header">
-                <h2 class="section-title">Customer Report</h2>
+                <h2 class="section-title"> Dashboard </h2>
                 <div class="section-toggle">+</div>
             </div>
             <div class="section-content">
                 <ul>
-                    <p> The Customer report focuses on customer behavior and order patterns. It includes insights such as top-ordering customers, repeat purchase rates, and demographic details. This report helps businesses identify loyal customers, understand preferences, and enhance satisfaction by addressing customer needs effectively.</p>
+                    <p>Get a quick overview of Zomato’s performance with ₹987M in revenue, 2 million orders, and 150K+ ratings. The dashboard highlights top-performing food categories, the best cities by order volume, and sales trends across years. A powerful visual summary to track business growth and customer engagement over time.</p>
                 </ul>
             </div>
         </div>
 
         <div class="section">
             <div class="section-header">
-                <h2 class="section-title">Inventory Report</h2>
+                <h2 class="section-title">User Engagement</h2>
                 <div class="section-toggle">+</div>
             </div>
             <div class="section-content">
-                <p>Track operational KPIs such as delivery time, efficiency rates, and partner performance to improve overall workflow.</p>
+                <p> total users, active users, and churn patterns. The page shows that Zomato has a youthful user base, with most customers aged 20–26. However, a significant churn of 33K users indicates a need to improve retention strategies. Gender-based analytics also reveal trends in gaining and losing users.</p>
             </div>
         </div>
 
         <div class="section">
             <div class="section-header">
-                <h2 class="section-title"> Marketing Report</h2>
+                <h2 class="section-title"> City Performance Metrics</h2>
                 <div class="section-toggle">+</div>
             </div>
             <div class="section-content">
-                <p>The Marketing report analyzes the impact of campaigns and promotions on sales and customer acquisition. It tracks key metrics like conversion rates, ad performance, and revenue generated from marketing efforts. By identifying successful campaigns, businesses can optimize marketing strategies for better ROI.</p>
+                <p>Discover how different cities are contributing to overall sales, ratings, and user activity. Tirupati leads in revenue, while Bikaner shines in user engagement and ratings. The city-wise analysis helps uncover high-performing regions and opportunities for expansion or deeper targeting.</p>
             </div>
         </div>
 
-           <!-- Download Project Button -->
            <a href="" download="Zomato Power BI Dashboard.pdf" class="download-button">Download Project PDF</a>
  
 
-          <!-- Expandable Sections -->
-
-          <!-- Technical Skills Section -->
-<section id="skills" style="padding: 2rem 0;">
+          <section id="skills" style="padding: 2rem 0;">
     <div class="container">
-      <h2 class="section-title" style="text-align: center; margin-bottom: 2rem;">Skill Used</h2>
-      <div class="skills-grid">
-        <!-- Skill Card 1 -->
+      <h2 class="section-title" style="text-align: center; margin-bottom: 2rem;">Skill</h2>
+      <div class="skills-grid horizontal-scroll">
+        <div class="skill-card">
+          <div class="icon">
+            <i class="fab fa-python"></i>
+          </div>
+          <h3>Python</h3>
+          <p>Programming and data analysis</p>
+        </div>
         <div class="skill-card">
           <div class="icon">
             <i class="fas fa-database"></i>
@@ -407,7 +569,41 @@ body {
           <h3>SQL</h3>
           <p>Data querying and database management</p>
         </div>
-        <!-- Skill Card 2 -->
+        <div class="skill-card">
+          <div class="icon">
+            <i class="fas fa-file-excel"></i>
+          </div>
+          <h3>Microsoft Excel</h3>
+          <p>Data analysis and spreadsheet management</p>
+        </div>
+        <div class="skill-card">
+          <div class="icon">
+            <i class="fab fa-aws"></i>
+          </div>
+          <h3>AWS</h3>
+          <p>Cloud computing and infrastructure</p>
+        </div>
+        <div class="skill-card">
+          <div class="icon">
+            <i class="fab fa-microsoft"></i>
+          </div>
+          <h3>Microsoft Azure</h3>
+          <p>Cloud platform and services</p>
+        </div>
+        <div class="skill-card">
+          <div class="icon">
+            <i class="fas fa-database"></i>
+          </div>
+          <h3>Cassandra</h3>
+          <p>Distributed NoSQL database</p>
+        </div>
+        <div class="skill-card">
+          <div class="icon">
+            <i class="fas fa-snowflake"></i>
+          </div>
+          <h3>Snowflake</h3>
+          <p>Cloud data warehousing</p>
+        </div>
         <div class="skill-card">
           <div class="icon">
             <i class="fas fa-chart-bar"></i>
@@ -415,7 +611,13 @@ body {
           <h3>Power BI</h3>
           <p>Data visualization and dashboards</p>
         </div>
-        <!-- Skill Card 3 -->
+        <div class="skill-card">
+          <div class="icon">
+            <i class="fas fa-chart-pie"></i>
+          </div>
+          <h3>Tableau</h3>
+          <p>Business intelligence and visualization</p>
+        </div>
         <div class="skill-card">
           <div class="icon">
             <i class="fab fa-figma"></i>
@@ -423,17 +625,111 @@ body {
           <h3>Figma</h3>
           <p>Design Theme and elements</p>
         </div>
-        <!-- Skill Card 4 -->
-        <!-- <div class="skill-card">
-          <div class="icon">
-            <i class="fab fa-html5"></i>
-          </div>
-          <h3>HTML & CSS</h3>
-          <p>Web design and front-end development</p>
-        </div>  -->
       </div>
     </div>
   </section>
+
+<style>
+/* Removed dropdown styles since skills are now direct cards */
+.skills-grid.horizontal-scroll {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  overflow-x: hidden;
+  padding-bottom: 10px;
+  align-items: flex-start;
+  position: relative;
+}
+.skills-grid.horizontal-scroll .skill-card {
+  min-width: 200px;
+  max-width: 200px;
+  height: 260px;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.skills-grid.horizontal-scroll .skill-card .icon {
+  flex-shrink: 0;
+}
+.skills-grid.horizontal-scroll .skill-card h3,
+.skills-grid.horizontal-scroll .skill-card p {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+}
+.skills-grid.horizontal-scroll::-webkit-scrollbar {
+  display: none;
+}
+@media (max-width: 1024px) {
+  .skills-grid.horizontal-scroll {
+    gap: 1rem;
+    padding-bottom: 8px;
+  }
+  .skills-grid.horizontal-scroll .skill-card {
+    min-width: 180px;
+    max-width: 180px;
+    height: 220px;
+    padding: 1rem 0.5rem;
+  }
+}
+@media (max-width: 768px) {
+  .skills-grid.horizontal-scroll {
+    gap: 0.7rem;
+    padding-bottom: 6px;
+  }
+  .skills-grid.horizontal-scroll .skill-card {
+    min-width: 150px;
+    max-width: 150px;
+    height: 180px;
+    padding: 0.7rem 0.3rem;
+  }
+  .skills-grid.horizontal-scroll .skill-card h3 {
+    font-size: 1rem;
+  }
+  .skills-grid.horizontal-scroll .skill-card p {
+    font-size: 0.8rem;
+  }
+}
+</style>
+
+<script>
+function autoScrollSkillsLoop() {
+  const container = document.querySelector('.skills-grid.horizontal-scroll');
+  if (!container) return;
+  // Clone skill cards for seamless infinite scroll
+  const cards = Array.from(container.children);
+  cards.forEach(card => {
+    const clone = card.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    container.appendChild(clone);
+  });
+  let scrollAmount = 0;
+  let lastTimestamp = null;
+  function scrollStep(timestamp) {
+    if (!lastTimestamp) lastTimestamp = timestamp;
+    const delta = timestamp - lastTimestamp;
+    lastTimestamp = timestamp;
+    scrollAmount += (delta * 0.04); // smooth speed
+    // When scrolled past the first set, reset to start
+    const singleSetWidth = container.scrollWidth / 2;
+    if (scrollAmount >= singleSetWidth) {
+      scrollAmount -= singleSetWidth;
+    }
+    container.scrollLeft = scrollAmount;
+    requestAnimationFrame(scrollStep);
+  }
+  requestAnimationFrame(scrollStep);
+}
+document.addEventListener('DOMContentLoaded', function() {
+  autoScrollSkillsLoop();
+});
+</script>
 
   <div class="social-section">
 
